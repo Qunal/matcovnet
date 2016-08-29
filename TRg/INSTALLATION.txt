@@ -1,0 +1,69 @@
+##############################
+# Installation of MatConvNet #
+#      		             #
+##############################
+
+# 1. unzip the tarball
+unzip matconvnet-1.0-beta16.zip
+
+# 2. open with an editor the file Makefile
+gedit Makefile
+
+# 3.Checking for CUDA and CUDNN
+#
+#  There are some options here. If you have cuda
+#  correctly installed in your machine, you might
+#  want to set:
+
+ENABLE_GPU ?= yes
+
+#  If you also have cudnn installed (great!), then...
+
+ENABLE_GPU ?=  yes
+
+# Otherwise, leave those variables as:
+ENABLE_GPU ?= 
+ENABLE_GPU ?= 
+
+# 4. Setting up your architecture
+#
+# do you have a Linux machine? Then...
+
+ARCH ?= glnxa64
+
+# is it Mac Os? Then...
+
+ARCH ?= maci64
+
+# Windows...? Seriously!!??
+#
+# Then follow the instructions on this website:
+# http://www.vlfeat.org/matconvnet/install/
+
+
+# 5. Defining path to Matlab installation
+#
+# MATLABROOT ?= your_path_to_matlab
+# e.g.,
+
+MATLABROOT ?= /opt/MATLAB/MATLAB_Production_Server/R2015a
+
+
+# 6. Having CUDA? Great, then remember to set...
+# CUDAROOT ?= path_to_cuda
+# e.g.,
+CUDAROOT ?= /usr/local/cuda-7.5
+
+
+# 7. Having CUDNN? Perfect! then set...
+#
+# CUDNNROOT ?= path_to_cudnn
+# e.g.,
+CUDNNROOT ?= /usr/local/cudnn-7.0-linux-x64-v3.0
+
+# 8. Save the changes
+
+# 9. open a terminal and compile the library using make:
+
+# 10. Ready to go!
+make

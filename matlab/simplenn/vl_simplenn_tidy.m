@@ -16,7 +16,7 @@ function tnet = vl_simplenn_tidy(net)
 % This file is part of the VLFeat library and is made available under
 % the terms of the BSD license (see the COPYING file).
 
-tnet = struct('layers', {{}}, 'meta', struct()) ;
+tnet = struct('layers', {{}}, 'meta', struct()) ;% tidy net layer array of cells
 
 % copy meta information in net.meta subfield
 if isfield(net, 'meta')
@@ -34,8 +34,8 @@ end
 % copy layers
 for l = 1:numel(net.layers)
   defaults = {'name', sprintf('layer%d', l), 'precious', false};
-  layer = net.layers{l} ;
-
+%   layer = net.layers{l} ;% Change from curly to ()
+ layer = net.layers{l} ;% Change from curly to ()
   % check weights format
   switch layer.type
     case {'conv', 'convt', 'bnorm'}

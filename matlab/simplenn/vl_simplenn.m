@@ -321,7 +321,7 @@ for i=1:n
       res(i+1).x = vl_nnsoftmax(res(i).x) ;
 
     case 'loss'
-      res(i+1).x = vl_nnloss(res(i).x, l.class) ;
+      res(i+1).x = vl_nnloss(res(i).x, l.class) ;% addd line 307 cnn_train
 
     case 'softmaxloss'
       res(i+1).x = vl_nnsoftmaxloss(res(i).x, l.class) ;

@@ -64,7 +64,7 @@ if numel(varargin) > 1
   error('There can be at most one option.') ;
 end
 
-optNames = fieldnames(opts)' ;
+optNames = fieldnames(opts)' ;%returns a cell array of strings containing the names of the fields in structure s.
 
 % convert ARGS into a structure
 ai = 1 ;
@@ -74,7 +74,7 @@ while ai <= numel(args)
   % Check whether the argument is a (param,value) pair or a structure.
   if recursive && isstruct(args{ai})
     params = fieldnames(args{ai})' ;
-    values = struct2cell(args{ai})' ;
+    values = struct2cell(args{ai})' ;%converts the m-by-n structure s (with p fields) into a p-by-m-by-n cell array c.
     if nargout == 1
       opts = vl_argparse(opts, vertcat(params,values)) ;
     else

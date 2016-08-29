@@ -63,7 +63,7 @@ if opts.double & ~opts.single
 end
 
 % Run tests
-root = fileparts(mfilename('fullpath')) ;
+root = fileparts(mfilename('fullpath')) ;% mcovnet/matlab
 suite = matlab.unittest.TestSuite.fromFolder(fullfile(root, 'suite'), sel) ;
 runner = matlab.unittest.TestRunner.withTextOutput('Verbosity',3);
 if opts.break

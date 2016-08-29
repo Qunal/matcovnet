@@ -1,8 +1,8 @@
 function [net, info] = cnn_mnist(varargin)
 %CNN_MNIST  Demonstrates MatConvNet on MNIST
 
-run(fullfile(fileparts(mfilename('fullpath')),...
-  '..', '..', 'matlab', 'vl_setupnn.m')) ;
+%run(fullfile(fileparts(mfilename('fullpath')),...
+ % '..', '..', 'matlab', 'vl_setupnn.m')) ;
 
 opts.batchNormalization = false ;
 opts.networkType = 'simplenn' ;
@@ -34,7 +34,7 @@ else
   save(opts.imdbPath, '-struct', 'imdb') ;
 end
 
-net.meta.classes.name = arrayfun(@(x)sprintf('%d',x),1:10,'UniformOutput',false) ;
+net.meta.classes.name = arrayfun(@(x)sprintf('%d',x),1:10,'UniformOutput',false) ;% names 1-10 number classes
 
 % --------------------------------------------------------------------
 %                                                                Train
@@ -65,7 +65,7 @@ end
 % --------------------------------------------------------------------
 function [images, labels] = getSimpleNNBatch(imdb, batch)
 % --------------------------------------------------------------------
-images = imdb.images.data(:,:,:,batch) ;
+images = imdb.images.data(:,:,:,batch) ;% HWDB format HtX WtXDepthX Batch
 labels = imdb.images.labels(1,batch) ;
 
 % --------------------------------------------------------------------
@@ -102,9 +102,9 @@ end
 f=fopen(fullfile(opts.dataDir, 'train-images-idx3-ubyte'),'r') ;
 x1=fread(f,inf,'uint8');
 fclose(f) ;
-x1=permute(reshape(x1(17:end),28,28,60e3),[2 1 3]) ;
+x1=permute(reshape(x1(17:end),28,28,60e3),[2 1 3]) ;% Row is height. col is width in images
 
-f=fopen(fullfile(opts.dataDir, 't10k-images-idx3-ubyte'),'r') ;
+f=fopen(fullfile(opts.dataDir, 't10k-images-idx3-ubyte'),'r') ;% validation data
 x2=fread(f,inf,'uint8');
 fclose(f) ;
 x2=permute(reshape(x2(17:end),28,28,10e3),[2 1 3]) ;
@@ -114,14 +114,14 @@ y1=fread(f,inf,'uint8');
 fclose(f) ;
 y1=double(y1(9:end)')+1 ;
 
-f=fopen(fullfile(opts.dataDir, 't10k-labels-idx1-ubyte'),'r') ;
+f=fopen(fullfile(opts.dataDir, 't10k-labels-idx1-ubyte'),'r') ;% validation Labels
 y2=fread(f,inf,'uint8');
 fclose(f) ;
 y2=double(y2(9:end)')+1 ;
 
 set = [ones(1,numel(y1)) 3*ones(1,numel(y2))];
-data = single(reshape(cat(3, x1, x2),28,28,1,[]));
-dataMean = mean(data(:,:,:,set == 1), 4);
+data = single(reshape(cat(3, x1, x2),28,28,1,[]));% merge train and validate into one
+dataMean = mean(data(:,:,:,set == 1), 4);% Avg across all images N in traINING
 data = bsxfun(@minus, data, dataMean) ;
 
 imdb.images.data = data ;

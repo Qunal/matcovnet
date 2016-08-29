@@ -9,7 +9,7 @@ function vl_setupnn()
 % the terms of the BSD license (see the COPYING file).
 
 root = vl_rootnn() ;
-addpath(fullfile(root, 'matlab')) ;
+addpath(fullfile(root, 'matlab')) ;% labindex ,numlabs overshadowed 
 addpath(fullfile(root, 'matlab', 'mex')) ;
 addpath(fullfile(root, 'matlab', 'simplenn')) ;
 addpath(fullfile(root, 'matlab', 'xtest')) ;

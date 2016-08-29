@@ -138,6 +138,7 @@ inputSize = [size(X,1) size(X,2) size(X,3) size(X,4)] ;
 % Form 1: C has one label per image. In this case, get C in form 2 or
 % form 3.
 c = gather(c) ;
+c=double(c);% trying to avoid bug of too small size on 200K image DB
 if numel(c) == inputSize(4)
   c = reshape(c, [1 1 1 inputSize(4)]) ;
   c = repmat(c, inputSize(1:2)) ;

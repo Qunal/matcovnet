@@ -17,10 +17,10 @@ function [net, stats] = cnn_train(net, imdb, getBatch, varargin)
 % This file is part of the VLFeat library and is made available under
 % the terms of the BSD license (see the COPYING file).
 
-opts.expDir = fullfile('data','exp') ;
+opts.expDir = fullfile('data','exp') ;% output exxport 
 opts.continue = true ;
 opts.batchSize = 256 ;
-opts.numSubBatches = 1 ;
+opts.numSubBatches = 1 ;% one image per iteration
 opts.train = [] ;
 opts.val = [] ;
 opts.gpus = [] ;
@@ -42,7 +42,8 @@ opts.errorLabels = {} ;
 opts.plotDiagnostics = false ;
 opts.plotStatistics = true;
 opts = vl_argparse(opts, varargin) ;
-
+%%
+% asumes imdb has images set1=train,set3=validate, set2=test
 if ~exist(opts.expDir, 'dir'), mkdir(opts.expDir) ; end
 if isempty(opts.train), opts.train = find(imdb.images.set==1) ; end
 if isempty(opts.val), opts.val = find(imdb.images.set==2) ; end
@@ -55,7 +56,7 @@ if isnan(opts.val), opts.val = [] ; end
 
 net = vl_simplenn_tidy(net); % fill in some eventually missing values
 net.layers{end-1}.precious = 1; % do not remove predictions, used for error
-vl_simplenn_display(net, 'batchSize', opts.batchSize) ;
+vl_simplenn_display(net, 'batchSize', opts.batchSize) ;% very image is slow
 
 evaluateMode = isempty(opts.train) ;
 if ~evaluateMode
@@ -303,7 +304,7 @@ for t=1:opts.batchSize:numel(subset)
       dzdy = [] ;
       evalMode = 'test' ;
     end
-    net.layers{end}.class = labels ;
+    net.layers{end}.class = labels ;% Assumes last layer is loss. Adds class labels to batch data
     res = vl_simplenn(net, im, dzdy, res, ...
                       'accumulate', s ~= 1, ...
                       'mode', evalMode, ...
